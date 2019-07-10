@@ -1,0 +1,21 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+button {
+    padding: 20px;
+    font-size: 15px;
+    height: 50px;
+}
+
+#result {
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+}
