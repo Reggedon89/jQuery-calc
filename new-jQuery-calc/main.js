@@ -1,11 +1,12 @@
 $(document).ready(() => {
   const calculator = {
     displayValue: "0",
-    firstOperator: null,
+    firstOperand: null,
     waitingForSecondOperator: false,
     operator: null
   };
   // this displays the actual number pressed on calculator screen
+
   function inputNum(digit) {
     const { displayValue, waitingForSecondOperator } = calculator;
     // Overwrite the display value if there is nothing in it, otherwise append to it
@@ -29,18 +30,38 @@ $(document).ready(() => {
     }
     console.log(calculator);
   }
+
   function handleOperator(nextOperator) {
     //destructure calculator and pull our what is needed
-    const { firstOperator, displayValue, operator } = calculator;
+    const { firstOperand, displayValue, operator } = calculator;
     const inputValue = parseFloat(displayValue);
 
-    if (firstOperator === null) {
-      calculator.firstOperator = inputValue;
+    if (firstOperand === null) {
+      calculator.firstOperand = inputValue;
+    } else if (operator) {
+      const result = performCalculation[operator](firstOperand, inputValue);
+
+      calculator.displayValue = String(result);
+      calculator.firstOperand = result;
     }
 
     calculator.waitingForSecondOperator = true;
     calculator.operator = nextOperator;
+    console.log(calculator);
   }
+
+  //this object handles the actual calculations
+  const performCalculation = {
+    "/": (firstOperand, secondOperand) => firstOperand / secondOperand,
+
+    "*": (firstOperand, secondOperand) => firstOperand * secondOperand,
+
+    "+": (firstOperand, secondOperand) => firstOperand + secondOperand,
+
+    "-": (firstOperand, secondOperand) => firstOperand - secondOperand,
+
+    "=": (firstOperand, secondOperand) => secondOperand
+  };
 
   //changes the display of calculator()
   function display() {
@@ -49,12 +70,12 @@ $(document).ready(() => {
   }
   display();
 
-  const keys = $(".calculator-keys");
+  const keys = document.querySelector(".calculator-keys");
   // hooks up the keys to return the value associated with them
-  keys.on("click", function(e) {
+  keys.addEventListener("click", event => {
     //Object destructuring
-    e.preventDefault();
-    const { target } = e;
+    event.preventDefault();
+    const { target } = event;
     if (!target.matches("button")) {
       return;
     }
