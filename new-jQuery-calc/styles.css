@@ -34,7 +34,7 @@ html {
 button {
     height: 60px;
     background-color: darkgreen;
-
+    outline: none;
     font-size: 15px;
     border-radius: 3px;
 }
@@ -58,12 +58,16 @@ button:hover {
     background-color: red;
 }
 
+
+
 .all-clear:hover {
     background-color: maroon;
 }
 
 .equal-sign {
     background-color: blue;
+
+
 }
 
 .equal-sign:hover {
